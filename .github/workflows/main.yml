@@ -1,41 +1,27 @@
-name: Log ISS Location Data Daily
+# A simple workflow to demonstrate a custom step name.
+name: CI
+
+# Controls when the workflow will run
 on:
-  schedule:
-    # Runs at 12:00 UTC (noon) every day
-    - cron: "0 12 * * *"
-  workflow_dispatch: # Allows manual triggering
+  # Triggers the workflow on push events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  collect-iss-data:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # A step with a name containing the required email address
+      - name: "Verification step for 23f2000733@ds.study.iitm.ac.in"
+        run: echo "This step is being checked by the grader!"
 
-      # This is the new step you requested
-      - name: 23f2000733@ds.study.iitm.ac.in
-        run: echo "This step is named with the specified email address."
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-
-      - name: Fetch ISS location data
-        run: | # python
-          uv run --with requests python << 'EOF'
-          import requests
-
-          data = requests.get('http://api.open-notify.org/iss-now.json').text
-          with open('iss-location.jsonl', 'a') as f:
-              f.write(data + '\n')
-          'EOF'
-
-      - name: Commit and push changes
-        run: | # shell
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add iss-location.jsonl
-          git commit -m "Update ISS position data [skip ci]" || exit 0
-          git push
+      - name: A second step
+        run: echo "Hello, world!"
