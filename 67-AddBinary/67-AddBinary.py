@@ -1,0 +1,26 @@
+# Last updated: 05/10/2025, 17:16:41
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        return bin(int(a, 2) + int(b, 2))[2:]
+
+
+        # n = max(len(a),len(b))
+        # a, b = a.zfill(n), b.zfill(n)
+
+        # carry = 0
+        # answer = []
+        # for i in range(n-1,-1,-1):
+        #     if a[i] == '1':
+        #         carry +=1
+        #     if b[i] == '1':
+        #         carry += 1
+        #     answer.append(str(carry%2))
+        #     carry //=2
+
+        # if carry == 1:
+        #     answer.append("1")
+        # answer.reverse()
+
+        # return "".join(answer)
+
+            
